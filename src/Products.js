@@ -1,5 +1,6 @@
 let Products = [
 	{
+		id: 0,
 		sellerName: "Lenovo",
 		name: "Lenovo laptop z710",
 		description: "17.3” EVERYDAY ENTERTAINMENT LAPTOP.
@@ -16,6 +17,7 @@ let Products = [
 		count: 3
 	}, 
 	{
+		id: 10,
 		sellerName: "Apple",
 		name: "Iphone 7+",
 		description: "
@@ -31,6 +33,7 @@ let Products = [
 	    count: 2
 	}, 
 	{
+		id: 20,
 		sellerName: "Samsung",
 		name: "Samsung galaxy s10",
 		description: "
@@ -43,6 +46,7 @@ let Products = [
 		count: 5
 	},
 	{
+		id: 228,
 		sellerName: "LG",
 		name: "LG g7 thinq",
 		description: "
@@ -56,6 +60,7 @@ let Products = [
 		count: 2
 	},
 	{
+		id: 278,
 		sellerName: "Apple",
 		name: "Macbook Pro 2018",
 		description: "
@@ -70,6 +75,7 @@ let Products = [
 		count: 4
 	},
 	{
+		id: 2711,
 		sellerName: "Google",
 		name: "Google Pixel 2",
 		description: "
@@ -85,6 +91,7 @@ let Products = [
 		count: 5
 	}, 
 	{
+		id: 3621,
 		sellerName: "Apple",
 		name: "AirPods",
 		description: "
@@ -103,6 +110,7 @@ let Products = [
 		count: 4
 	},
 	{
+		id: 27163,
 		sellerName: "Dell",
 		name: "Inspiron 15 laptop 7000",
 		description: "
@@ -116,6 +124,7 @@ let Products = [
 		count: 3
 	},
 	{
+		id: 2718,
 		sellerName: "Asus",
 		name: "Asus VivoBook s15",
 		description: "
@@ -130,6 +139,7 @@ let Products = [
 		count: 5
 	},
 	{
+		id: 7326,
 		sellerName: "DJI",
 		name: "DJI - Mavic 2 Pro Quadcopter with Remote Controller",
 		description: "
@@ -143,6 +153,7 @@ let Products = [
 		count: 2
 	}, 
 	{
+		id: 6217,
 		sellerName: "PISEN",
 		name: "PISEN 20000mAh Portable Charger",
 		description: "
