@@ -1,4 +1,5 @@
 import React from 'react';
+import Products from './Products.js';
 
 class ProductsList extends React.Component {
 	constructor(props) {
