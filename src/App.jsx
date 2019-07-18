@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
+import { createStore } from 'react-redux';
 import ProductsList from './components/ProductsList.jsx';
 import ProductDetailed from './components/ProductDetailed.jsx';
 import Busket from './components/Busket.jsx';
