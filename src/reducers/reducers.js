@@ -4,6 +4,8 @@ import {ADD_TO_BUSKET, DELETE_FROM_BUSKET,
 import {fetchProducts} from './actions.js';
 import {combineReducers, createStore} from 'redux';
 
+const showPerPage = 5;
+
 const initialState = {
 	orderedProducts: [],
 	products: [],
@@ -13,7 +15,12 @@ const initialState = {
 initialState.products = fetchProducts();
 
 const products = (state = initialState.products, action) => {
-	return state;
+	switch(action.type) {
+	case GET_PRODUCT_BY_ID:
+		return state.find((product) => product.id === action.id);
+	default:
+		return state;
+	}
 }
 /*
 const busket = (state = initialState, action) => {

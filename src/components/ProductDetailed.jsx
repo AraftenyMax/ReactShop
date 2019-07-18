@@ -3,7 +3,7 @@ import React from 'react';
 class ProductDetailed extends React.Component {
 	constructor(props) {
 		super(props);
-		this.id = props.match.params.id
+		this.id = props.match.params.id;
 	}
 
 	render() {

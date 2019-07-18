@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 class ProductPreview extends React.Component {
 	constructor(props) {
@@ -9,11 +10,13 @@ class ProductPreview extends React.Component {
 	render() {
 		return (
 			<div className="product-preview">
+			<Link to="/product/{this.product.id}">
 			<h1 className="product-preview-name">{this.product.name}</h1>
 			<div className="product-preview-img-container">
-				<img src={this.product.image} />
+				<img className="product-preview-img" src={this.product.image} />
 			</div>
-			<span className="product-preview-price">{this.product.price}</span>
+			</Link>
+			<span className="product-preview-price">Price: {this.product.price}$</span>
 			</div>
 			);
 	}

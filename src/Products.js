@@ -26,9 +26,7 @@ let Products = [
 	    Multi-Touch display with IPS technology\
 	    1920-by-1080-pixel resolution at 401 ppi\
 	    1300:1 contrast ratio (typical)",
-	    image: "https://store.storeimages.cdn-apple.com/4982/as-i\
-	    mages.apple.com/is/iphone7-select-2019-family?wid=441&amp;h\
-	    ei=529&amp;fmt=jpeg&amp;qlt=95&amp;op_usm=0.5,0.5&amp;.v=1550795429263",
+	    image: "https://images-na.ssl-images-amazon.com/images/I/51wxAG7KH0L.jpg",
 	    price: "669",
 	    count: 2
 	}, 

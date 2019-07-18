@@ -2,9 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import ProductPreview from './ProductPreview.jsx';
 
-const showPerPage = 5;
-
-const mapStateToProps = state => {
+function mapStateToProps(state, ownProps) {
 	return {products: state.products};
 }
 
