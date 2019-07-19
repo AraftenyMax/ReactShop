@@ -13,6 +13,7 @@ let Products = [
 		=bWFzdGVyfHJvb3R8MTc0ODIzfGltYWdlL3BuZ3xoMmIva\
 		GJkLzkzMTk4NzczNDUzMTAucG5nfDk3MWQxZTI5Y2E1ZjQ0Y\
 		zMwMTE2ODE5YWVmMTk4MDE4ZjU4YmUwZWE4ZDIyY2ZhODY3NDhjNjMzMzAwYjE1MzY",
+		os: "Windows 10",
 		price: "782",
 		count: 3
 	}, 
@@ -27,6 +28,7 @@ let Products = [
 	    1920-by-1080-pixel resolution at 401 ppi\
 	    1300:1 contrast ratio (typical)",
 	    image: "https://images-na.ssl-images-amazon.com/images/I/51wxAG7KH0L.jpg",
+	    os: "ios",
 	    price: "669",
 	    count: 2
 	}, 
@@ -40,6 +42,7 @@ let Products = [
 		and a Dynamic AMOLED screen that's easy on the eyes \
 		make the Infinity Display our most innovative yet.",
 		image: "https://images-na.ssl-images-amazon.com/images/I/61YVqHdFRxL._SX569_.jpg",
+		os: "android",
 		price: "699",
 		count: 5
 	},
@@ -55,6 +58,7 @@ let Products = [
 		up to 19 subject options.",
 		image: "https://images-na.ssl-images-amazon.com/images/I/618T%2BXYuRpL._SX569_.jpg",
 		price: "384",
+		os: "android",
 		count: 2
 	},
 	{
@@ -70,6 +74,7 @@ let Products = [
 		images/product/laptops/Apple_MacBook_Pro_13inch_2018/\
 		Apple_MacBook_Pro_13inch_2018_L_1.jpg",
 		price: "1299",
+		os: "MacOS",
 		count: 4
 	},
 	{
@@ -86,6 +91,7 @@ let Products = [
 		dated looks and the fact that there’s no headphone jack",
 		image: "https://assets.pcmag.com/media/images/470228-google-pixel-2.jpg?width=1500&height=844",
 		price: "649",
+		os: "android",
 		count: 5
 	}, 
 	{
@@ -105,6 +111,7 @@ let Products = [
 		 high-quality sound. Just like magic.",
 		image: "https://images-na.ssl-images-amazon.com/images/I/41DYtv1JJaL._SX466_.jpg",
 		price: "199",
+		os: "android",
 		count: 4
 	},
 	{
@@ -119,6 +126,7 @@ let Products = [
 		image: "https://cnet2.cbsistatic.com/img/GB_VQU4lnDFh_uhhlgHwt_-BAxM=\
 		/868x488/2017/03/03/b7f67146-187f-4eb5-9428-d19088a57c35/dell-inspiron-15-7000-2017-05.jpg",
 		price: "699",
+		os: "Linux",
 		count: 3
 	},
 	{
@@ -134,6 +142,7 @@ let Products = [
 		is designed for today’s fast-paced urban lifestyle.",
 		image: "https://www.laptopmag.com/images/uploads/5551/g/lasus-vivobook-s15-s530u-006-lede.jpg",
 		price: "649",
+		os: "Windows 10",
 		count: 5
 	},
 	{
@@ -148,6 +157,7 @@ let Products = [
 		Pro aircraft has 8GB of internal storage and supports microSD cards up to 128GB.",
 		image: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6262/6262620_sd.jpg",
 		price: "1499",
+		os: "No info",
 		count: 2
 	}, 
 	{
@@ -160,6 +170,7 @@ let Products = [
 		 iPad, Samsung Galaxy and More (White)",
 		image: "https://images-na.ssl-images-amazon.com/images/I/61XR6-Y%2BDuL._SL1200_.jpg",
 		price: "34",
+		os: "No os",
 		count: 6
 	}
 ];

@@ -4,8 +4,6 @@ import {ADD_TO_BUSKET, DELETE_FROM_BUSKET,
 import {fetchProducts} from './actions.js';
 import {combineReducers, createStore} from 'redux';
 
-const showPerPage = 5;
-
 const initialState = {
 	orderedProducts: [],
 	products: [],

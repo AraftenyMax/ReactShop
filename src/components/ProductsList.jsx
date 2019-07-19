@@ -2,11 +2,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 import ProductPreview from './ProductPreview.jsx';
 
+const showPerPage = 5;
+
 function mapStateToProps(state, ownProps) {
 	return {products: state.products};
 }
 
-class Products extends React.Component {
+class ProductsListConnected extends React.Component {
 	constructor(props) {
 		super(props);
 		this.getProductsForPage = this.getProductsForPage.bind(this);
@@ -25,7 +27,6 @@ class Products extends React.Component {
 		if (this.products) {
 			const data = this.products.map((product) => 
 					<ProductPreview key={product.name} product={product} />);
-			console.log(data);
 			return data;
 		} else {
 			return (<p>Wrong page number</p>);
@@ -39,6 +40,6 @@ class Products extends React.Component {
 	}
 }
 
-const ProductsList = connect(mapStateToProps)(Products);
+const ProductsList = connect(mapStateToProps)(ProductsListConnected);
 
 export default ProductsList;
