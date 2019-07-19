@@ -7,6 +7,6 @@ export function fetchProducts(data = "") {
 	return Products;
 }
 
-export function getProductById(id) {
-	return {type: GET_PRODUCT_BY_ID, id};
+export function addProductToBusket(itemId, count) {
+	return {type: ADD_TO_BUSKET, payload: {id: itemId, count: count}};
 }

@@ -17,7 +17,7 @@ class App extends React.Component {
 			<div>
 				<Header/>
 				<Router>
-					<Route path="/basket" component={Busket} />
+					<Route path="/busket" component={Busket} />
 					<Route path="/product/:id" component={ProductDetailed} />
 					<Route path="/products/:page?" component={ProductsList} />
 				</Router>

@@ -20,26 +20,34 @@ const products = (state = initialState.products, action) => {
 		return state;
 	}
 }
-/*
+
 const busket = (state = initialState, action) => {
 	switch(action.type) {
 		case ADD_TO_BUSKET:
 			let item = initialState.products.find(function(product) => {
-				return element.id == action.productId;
+				return element.id == action.payload.id;
 			});
-			if (item != undefined) {
-				if (item.count >= action.orderedCount) {
+			if (item) {
+				if (item.count >= action.payload.count) {
+					let newState = { ...state };
+					const { count } = action;
 					if (!orderedProductsId.includes(item.id)){
-						orderedProductsId.append(item.id);
+						newState.orderedProducts.append({id: item.id, count: 0});
 					}
-
+					let orderedProductIndex = newState.orderedProducts.findIndex(
+						(product) => product.id == item.id);
+					let productIndex = newState.products.indexOf(item);
+					newState.orderedProducts[orderedProductIndex].count += count;
+					newState.products[productIndex].count -= count;
+					return newState;
 				}
 			}
 	}
-}*/
+}
 
 const shop = combineReducers({
-	products: products
+	products: products,
+	busket: busket
 });
 
 export default shop;
