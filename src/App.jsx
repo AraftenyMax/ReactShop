@@ -15,13 +15,13 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
-				<Header/>
 				<Router>
+					<Header/>
 					<Route path="/busket" component={Busket} />
 					<Route path="/product/:id" component={ProductDetailed} />
 					<Route path="/products/:page?" component={ProductsList} />
+					<Footer/>
 				</Router>
-			<Footer/>
 			</div>
 			);
 	}
