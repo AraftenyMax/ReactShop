@@ -1,16 +1,18 @@
 import Products from '../Products.js';
-import {ADD_TO_BUSKET, DELETE_FROM_BUSKET,
- UPDATE_ORDERED_COUNT, RECEIVE_PRODUCTS,
-  GET_PRODUCT_BY_ID, GET_PRODUCTS_PAGE} from '../constants/ActionTypes.js';
+import {ADD_TO_BUSKET, DELETE_FROM_BUSKET, GET_BUSKET_TOTAL_PRICE} from '../constants/ActionTypes.js';
 
 export function fetchProducts(data = "") {
 	return Products;
 }
 
-export function addToBusket(itemId, count) {
+export function addToBusket(itemId, count = 1) {
 	return {type: ADD_TO_BUSKET, payload: {id: itemId, count: count}};
 }
 
-export function deleteFromBusket(itemId, count) {
+export function calculateBusketPrice() {
+	return {type: GET_BUSKET_TOTAL_PRICE};
+}
+
+export function deleteFromBusket(itemId, count = 1) {
 	return {type: DELETE_FROM_BUSKET, payload: {id: itemId, count: count}};
 }

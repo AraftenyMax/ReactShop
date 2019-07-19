@@ -5,7 +5,7 @@ import {fetchProducts} from './actions.js';
 import {combineReducers, createStore} from 'redux';
 
 const initialState = {
-	orderedProductsIds: [],
+	orderedProducts: [],
 	products: [],
 	productsPerPage: 5
 }
@@ -24,19 +24,33 @@ const products = (state = initialState.products, action) => {
 const busket = (state = initialState, action) => {
 	switch(action.type) {
 		case ADD_TO_BUSKET:
-			let item = initialState.products.find((product) => element.id == action.payload.id);
+			let item = initialState.products.find((product) => product.id == action.payload.id);
 			if (item) {
-				const { count } = action;
-				if (item.count >= action.payload.count) {
+				if (item.count > 0) {
 					let newState = { ...state };
-					if (!orderedProductsId.includes(item.id)){
-						newState.orderedProducts.append({id: item.id, count: 0});
+					if (!newState.orderedProducts.includes(item.id)){
+						newState.orderedProducts.push({id: item.id, count: 0});
 					}
 					let orderedProductIndex = newState.orderedProducts.findIndex(
 						(product) => product.id == item.id);
 					let productIndex = newState.products.indexOf(item);
-					newState.orderedProducts[orderedProductIndex].count += count;
-					newState.products[productIndex].count -= count;
+					newState.orderedProducts[orderedProductIndex].count++;
+					newState.products[productIndex].count--;
+					return newState;
+				}
+			}
+			return state;
+		case DELETE_FROM_BUSKET:
+			let orderedIndex = state.orderedProducts.findIndex((product) => product.id == action.payload.id);
+			if (orderedIndex != -1) {
+				if (state.orderedProducts[orderedIndex].count > 0) {
+					let newState = { ...state };
+					let productIndex = newState.products.findIndex((product) => product.id == action.payload.id);
+					newState.orderedProducts[orderedIndex].count -= action.payload.count;
+					newState.products[productIndex].count += action.payload.count;
+					if (newState.orderedProducts[orderedIndex].count <= 0) {
+						newState.orderedProducts.splice(orderedIndex, 1);
+					}
 					return newState;
 				}
 			}
