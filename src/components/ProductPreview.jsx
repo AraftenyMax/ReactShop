@@ -10,7 +10,7 @@ class ProductPreview extends React.Component {
 	render() {
 		return (
 			<div className="product-preview">
-			<Link to="/product/{this.product.id}">
+			<Link to={"/product/" + this.product.id}>
 			<h1 className="product-preview-name">{this.product.name}</h1>
 			<div className="product-preview-img-container">
 				<img className="product-preview-img" src={this.product.image} />
