@@ -1,11 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {addToBusket, deleteFromBusket} from '../reducers/actions.js';
 
 function mapStateToProps(state, ownProps) {
 	let id = ownProps.match.params.id;
 	let product = state.products.find((prod) => prod.id == id);
-	let orderedCount = state.orderedProducts.find((ordered) => ordered.id == id).count;
-	return {product: product, orderedCount: orderedCount ? orderedCount : 0};
+	let item = state.busket.orderedProductsIds.find((ordered) => ordered.id == id);
+	let orderedCount = item ? item.count : 0;
+	return {product: product, orderedCount: orderedCount};
 }
 
 class ProductDetailedConnected extends React.Component {
@@ -15,6 +17,8 @@ class ProductDetailedConnected extends React.Component {
 		this.renderContent = this.renderContent.bind(this);
 		this.addToBusket = this.addToBusket.bind(this);
 		this.deleteFromBusket = this.deleteFromBusket.bind(this);
+		this.dispatch = props.dispatch.bind(this);
+		console.log(props);
 		this.state = {
 			product: props.product,
 			orderedCount: props.orderedCount
@@ -22,15 +26,18 @@ class ProductDetailedConnected extends React.Component {
 	}
 
 	addToBusket(event) {
-		console.log("Adding to busket");
+		let payload = addToBusket(this.state.product.id, this.state.orderedCount += 1);
+		this.dispatch(payload);
+		this.setState({orderedCount: orderedCount + 1});
 	}
 
 	deleteFromBusket(event) {
-		console.log("Delete from busket");
+		let payload = deleteFromBusket(this.state.product.id, this.state.orderedCount -= 1);
+		dispatch(payload);
+		this.setState({orderedCount: orderedCount - 1});
 	}
 
 	renderContent() {
-		console.log(this.product);
 		if (this.product) {
 			return (<div className="product-detailed">
 			<h1 className="product-detailed-name">{this.state.product.name}</h1>

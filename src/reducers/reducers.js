@@ -5,7 +5,7 @@ import {fetchProducts} from './actions.js';
 import {combineReducers, createStore} from 'redux';
 
 const initialState = {
-	orderedProducts: [],
+	orderedProductsIds: [],
 	products: [],
 	productsPerPage: 5
 }
@@ -24,13 +24,11 @@ const products = (state = initialState.products, action) => {
 const busket = (state = initialState, action) => {
 	switch(action.type) {
 		case ADD_TO_BUSKET:
-			let item = initialState.products.find(function(product) => {
-				return element.id == action.payload.id;
-			});
+			let item = initialState.products.find((product) => element.id == action.payload.id);
 			if (item) {
+				const { count } = action;
 				if (item.count >= action.payload.count) {
 					let newState = { ...state };
-					const { count } = action;
 					if (!orderedProductsId.includes(item.id)){
 						newState.orderedProducts.append({id: item.id, count: 0});
 					}
@@ -42,12 +40,15 @@ const busket = (state = initialState, action) => {
 					return newState;
 				}
 			}
+			return state;
+		default:
+			return state;
 	}
 }
 
 const shop = combineReducers({
-	products: products,
-	busket: busket
+	busket: busket,
+	products: products
 });
 
 export default shop;

@@ -7,6 +7,10 @@ export function fetchProducts(data = "") {
 	return Products;
 }
 
-export function addProductToBusket(itemId, count) {
+export function addToBusket(itemId, count) {
 	return {type: ADD_TO_BUSKET, payload: {id: itemId, count: count}};
+}
+
+export function deleteFromBusket(itemId, count) {
+	return {type: DELETE_FROM_BUSKET, payload: {id: itemId, count: count}};
 }
