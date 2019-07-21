@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {addToBusket, deleteFromBusket} from '../reducers/actions.js';
+import BusketCountControls from './BusketCountControls.jsx';
 
 function mapStateToProps(state, ownProps) {
 	let id = ownProps.match.params.id;
@@ -15,46 +15,21 @@ class ProductDetailedConnected extends React.Component {
 		super(props);
 		this.product = props.product;
 		this.renderContent = this.renderContent.bind(this);
-		this.addToBusket = this.addToBusket.bind(this);
-		this.deleteFromBusket = this.deleteFromBusket.bind(this);
-		this.dispatch = props.dispatch.bind(this);
-		this.state = {
-			product: props.product,
-			orderedCount: props.orderedCount
-		};
-	}
-
-	addToBusket(event) {
-		let payload = addToBusket(this.state.product.id);
-		this.dispatch(payload);
-		this.setState({orderedCount: this.state.orderedCount + 1});
-	}
-
-	deleteFromBusket(event) {
-		if (this.state.orderedCount > 0) {
-			let payload = deleteFromBusket(this.state.product.id);
-			this.dispatch(payload);
-			this.setState({orderedCount: this.state.orderedCount - 1});
-		}
 	}
 
 	renderContent() {
 		if (this.product) {
 			return (<div className="product-detailed">
-			<h1 className="product-detailed-name">{this.state.product.name}</h1>
+			<h1 className="product-detailed-name">{this.product.name}</h1>
 			<div className="product-detailed-img-container">
-				<img className="product-detailed-img" src={this.state.product.image} />
+				<img className="product-detailed-img" src={this.product.image} />
 			</div>
-			<p className="product-detailed-price">Price: {this.state.product.price}$</p>
-			<p className="product-detailed-count">Available: {this.state.product.count}</p>
-			<div className="product-detailed-busket">
-				<span className="product-detailed-busket-minus" onClick={this.deleteFromBusket}>-</span>
-				<input className="product-detailed-busket-count" type="text" value={this.state.orderedCount}/>
-				<span className="product-detailed-busket-plus" onClick={this.addToBusket}>+</span>
-			</div>
-			<p className="product-detailed-seller">Seller: {this.state.product.sellerName}</p>
-			<p className="product-detailed-os">OS: {this.state.product.os}</p>
-			<p className="product-detailed-description">About product: {this.state.product.description}</p>
+			<p className="product-detailed-price">Price: {this.product.price}$</p>
+			<p className="product-detailed-count">Available: {this.product.count}</p>
+			<BusketCountControls id={this.product.id} />
+			<p className="product-detailed-seller">Seller: {this.product.sellerName}</p>
+			<p className="product-detailed-os">OS: {this.product.os}</p>
+			<p className="product-detailed-description">About product: {this.product.description}</p>
 			</div>);
 		}
 		return <p className="product-detailed-error">Sorry, but this product doesn't available.</p>

@@ -15,10 +15,6 @@ function mapPropsToState(state) {
 class HeaderConnected extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			totalCount: props.totalCount,
-			totalPrice: props.totalPrice
-		};
 	}
 
 	render() {
