@@ -9,6 +9,9 @@ const initialState = {
 }
 
 const productsPerPage = 5;
+const pagingLimit = 4;
+const range = (start, stop, step) => 
+	Array.from({ length: (stop - start) / step + 1}, (_, i) => start + (i * step));
 
 initialState.products = fetchProducts();
 
@@ -76,15 +79,24 @@ const busket = (state = initialState, action) => {
 }
 
 export function selectProductsForPage(state, page) {
-	let offset = page * productsPerPage;
+	let offset = (page - 1) * productsPerPage;
 	let limit = offset + productsPerPage;
-	if (limit => Object.keys(state.products).length)
+	if (limit > Object.keys(state.products).length == true)
 		limit = Object.keys(state.products).length;
-	return state.products.slice(offset, limit);
+	return Object.values(state.products).slice(offset, limit);
 }
 
-export function selectTotalPagesCount(state) {
-	return Math.ceil(Object.keys(state.products).length / productsPerPage);
+export function selectPagination(state, page) {
+	let offset = page;
+	let leftLimit = page - pagingLimit;
+	let rightLimit = page + pagingLimit;
+	if (leftLimit < 0)
+		leftLimit = 0;
+	let productPages = Object.keys(state.products).length / productsPerPage;
+	if (rightLimit > productPages)
+		rightLimit = productPages;
+	let pages = range(leftLimit, rightLimit, 1);
+	return pages;
 }
 
 export function selectProductPrice(state, id) {

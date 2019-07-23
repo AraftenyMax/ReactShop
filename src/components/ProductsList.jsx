@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import ProductPreview from './ProductPreview.jsx';
+import Pagination from './Pagination.jsx';
 import {selectProductsForPage} from '../reducers/reducers.js';
 
 const showPerPage = 5;
@@ -15,14 +16,15 @@ class ProductsListConnected extends React.Component {
 		super(props);
 		this.renderProductsList = this.renderProductsList.bind(this);
 		this.products = props.products;
+		this.page = props.match.params.page;
 	}
 
 
 	renderProductsList() {
 		if (this.products) {
-			const data = Object.keys(this.props.products).map((productId) => 
-					<ProductPreview key={this.products[productId].name}
-					 product={this.products[productId]} />);
+			const data = this.props.products.map((product) => 
+					<ProductPreview key={product.name}
+					 product={product} />);
 			return data;
 		} else {
 			return (<p>Wrong page number</p>);
@@ -30,8 +32,11 @@ class ProductsListConnected extends React.Component {
 	}
 
 	render() {
-		return (<div className="products-list">
+		return (<div className="content">
+		<div className="products-list">
 			{this.renderProductsList()}
+		</div>
+		<Pagination page={this.page}/>
 		</div>);
 	}
 }
