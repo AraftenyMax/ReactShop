@@ -4,7 +4,7 @@ import {addToBusket, deleteFromBusket} from '../reducers/actions.js';
 
 function mapStateToProps(state, props) {
 	let id = props.id;
-	let item = state.busket.orderedProducts.find((ordered) => ordered.id == id);
+	let item = state.busket.orderedProducts[id];
 	let orderedCount = item ? item.count : 0;
 	return {orderedCount: orderedCount};
 }

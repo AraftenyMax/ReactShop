@@ -4,8 +4,8 @@ import BusketCountControls from './BusketCountControls.jsx';
 
 function mapStateToProps(state, ownProps) {
 	let id = ownProps.match.params.id;
-	let product = state.products.find((prod) => prod.id == id);
-	let item = state.busket.orderedProducts.find((ordered) => ordered.id == id);
+	let product = state.products[id];
+	let item = state.busket.orderedProducts[id];
 	let orderedCount = item ? item.count : 0;
 	return {product: product, orderedCount: orderedCount};
 }
@@ -26,7 +26,9 @@ class ProductDetailedConnected extends React.Component {
 			</div>
 			<p className="product-detailed-price">Price: {this.product.price}$</p>
 			<p className="product-detailed-count">Available: {this.product.count}</p>
-			<BusketCountControls id={this.product.id} />
+			<div className="busket-count-controls">
+				<BusketCountControls id={this.product.id} />
+			</div>
 			<p className="product-detailed-seller">Seller: {this.product.sellerName}</p>
 			<p className="product-detailed-os">OS: {this.product.os}</p>
 			<p className="product-detailed-description">About product: {this.product.description}</p>

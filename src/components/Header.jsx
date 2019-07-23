@@ -1,14 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import {selectProductsCount, selectBusketPrice} from '../reducers/reducers.js';
 
 function mapPropsToState(state) {
-	let price = 0, count = 0;
-	state.busket.orderedProducts.forEach((orderedProduct) => {
-		let productPrice = state.products.find((product) => product.id == orderedProduct.id).price;
-		price += orderedProduct.count * productPrice;
-		count += orderedProduct.count;
-	});
+	let price = selectBusketPrice(state);
+	let count = selectProductsCount(state);
 	return {totalPrice: price, totalCount: count};
 }
 

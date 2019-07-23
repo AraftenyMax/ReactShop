@@ -1,32 +1,28 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import ProductPreview from './ProductPreview.jsx';
+import {selectProductsForPage} from '../reducers/reducers.js';
 
 const showPerPage = 5;
 
 function mapStateToProps(state, ownProps) {
-	return {products: state.products};
+	let page = ownProps.match.params.page;
+	return {products: selectProductsForPage(state, page)};
 }
 
 class ProductsListConnected extends React.Component {
 	constructor(props) {
 		super(props);
-		this.getProductsForPage = this.getProductsForPage.bind(this);
 		this.renderProductsList = this.renderProductsList.bind(this);
-		this.page = props.match.params.page;
-		this.products = this.getProductsForPage(props.products);
+		this.products = props.products;
 	}
 
-	getProductsForPage(productsList) {
-		let lowerBound = this.page * showPerPage;
-		let upperBound = lowerBound + showPerPage;
-		return productsList.slice(lowerBound, upperBound);
-	}
 
 	renderProductsList() {
 		if (this.products) {
-			const data = this.products.map((product) => 
-					<ProductPreview key={product.name} product={product} />);
+			const data = Object.keys(this.props.products).map((productId) => 
+					<ProductPreview key={this.products[productId].name}
+					 product={this.products[productId]} />);
 			return data;
 		} else {
 			return (<p>Wrong page number</p>);
