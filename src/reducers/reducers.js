@@ -1,11 +1,16 @@
 import {ADD_TO_BUSKET, DELETE_FROM_BUSKET, REMOVE_FROM_BUSKET,
-  GET_PRODUCT_BY_ID, MAKE_ORDER, CLEAR_BUSKET } from '../constants/ActionTypes.js';
-import {fetchProducts} from './actions.js';
+  GET_PRODUCT_BY_ID, MAKE_ORDER, CLEAR_BUSKET, APPLY_FILTER, CLEAR_FILTER} 
+  from '../constants/ActionTypes.js';
+import {fetchProducts, fetchFilters} from './actions.js';
 import {combineReducers, createStore} from 'redux';
 
 const initialState = {
 	orderedProducts: {},
 	products: {},
+	filters: {
+		userFilter: {},
+		defaultFilters: {}
+	}
 }
 
 const productsPerPage = 5;
@@ -14,6 +19,7 @@ const range = (start, stop, step) =>
 	Array.from({ length: (stop - start) / step + 1}, (_, i) => start + (i * step));
 
 initialState.products = fetchProducts();
+initialState.filters.defaultFilters = fetchFilters();
 
 const products = (state = initialState.products, action) => {
 	switch(action.type) {
@@ -21,6 +27,21 @@ const products = (state = initialState.products, action) => {
 		return state.find((product) => product.id === action.id);
 	default:
 		return state;
+	}
+}
+
+const filters = (state = initialState.filters, action) => {
+	let newState = {...state};
+	switch(action.type) {
+		case APPLY_FILTER:
+			newState.userFilter = Object.assign({}, action.payload.filter);
+			console.log(action.payload);
+			return newState;
+		case CLEAR_FILTER:
+			newState.userFilter = {};
+			return newState;
+		default:
+			return state;
 	}
 }
 
@@ -118,7 +139,6 @@ export function selectBusketPrice(state) {
 export function selectProductsCount(state) {
 	let orderedProducts = state.busket.orderedProducts;
 	let count = 0;
-	console.log(orderedProducts);
 	if (orderedProducts) {
 		count = Object.keys(orderedProducts).reduce((totalCount, productId) => {
 		 	return totalCount + state.busket.orderedProducts[productId].count;
@@ -139,6 +159,15 @@ export function selectOrderedProductsIds(state) {
 	return state.busket.orderedProducts;
 }
 
+export function selectFilters(state) {
+	console.log(state);
+	return state.filters.defaultFilters;
+}
+
+export function selectUserFilters(state) {
+	return state.filters.userFilter;
+}
+
 export function selectBusketInfo(state) {
 	if (!Object.keys(state.busket.orderedProducts).length) return {};
 	let orderedProductsIds = selectOrderedProductsIds(state);
@@ -150,7 +179,8 @@ export function selectBusketInfo(state) {
 
 const shop = combineReducers({
 	busket: busket,
-	products: products
+	products: products,
+	filters: filters
 });
 
 export default shop;

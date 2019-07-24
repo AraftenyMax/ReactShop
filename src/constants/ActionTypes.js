@@ -3,3 +3,5 @@ export const DELETE_FROM_BUSKET = "DELETE_FROM_BUSKET";
 export const REMOVE_FROM_BUSKET = "REMOVE_FROM_BUSKET";
 export const MAKE_ORDER = "MAKE_ORDER";
 export const CLEAR_BUSKET = "CLEAR_BUSKET";
+export const APPLY_FILTER = "APPLY_FILTER";
+export const CLEAR_FILTER = "CLEAR_FILTER";

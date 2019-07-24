@@ -28,7 +28,7 @@ let Products = [
 	    1920-by-1080-pixel resolution at 401 ppi\
 	    1300:1 contrast ratio (typical)",
 	    image: "https://images-na.ssl-images-amazon.com/images/I/51wxAG7KH0L.jpg",
-	    os: "ios",
+	    os: "iOS",
 	    price: "669",
 	    count: 2
 	}, 
@@ -42,7 +42,7 @@ let Products = [
 		and a Dynamic AMOLED screen that's easy on the eyes \
 		make the Infinity Display our most innovative yet.",
 		image: "https://images-na.ssl-images-amazon.com/images/I/61YVqHdFRxL._SX569_.jpg",
-		os: "android",
+		os: "Android",
 		price: "699",
 		count: 5
 	},
@@ -58,7 +58,7 @@ let Products = [
 		up to 19 subject options.",
 		image: "https://images-na.ssl-images-amazon.com/images/I/618T%2BXYuRpL._SX569_.jpg",
 		price: "384",
-		os: "android",
+		os: "Android",
 		count: 2
 	},
 	{
@@ -91,7 +91,7 @@ let Products = [
 		dated looks and the fact that there’s no headphone jack",
 		image: "https://assets.pcmag.com/media/images/470228-google-pixel-2.jpg?width=1500&height=844",
 		price: "649",
-		os: "android",
+		os: "Android",
 		count: 5
 	}, 
 	{
@@ -111,7 +111,7 @@ let Products = [
 		 high-quality sound. Just like magic.",
 		image: "https://images-na.ssl-images-amazon.com/images/I/41DYtv1JJaL._SX466_.jpg",
 		price: "199",
-		os: "android",
+		os: "Android",
 		count: 4
 	},
 	{

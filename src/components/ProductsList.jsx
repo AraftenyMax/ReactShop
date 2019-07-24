@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import ProductPreview from './ProductPreview.jsx';
 import Pagination from './Pagination.jsx';
+import Filter from './Filter.jsx';
 import {selectProductsForPage} from '../reducers/reducers.js';
 
 const showPerPage = 5;
@@ -33,6 +34,7 @@ class ProductsListConnected extends React.Component {
 
 	render() {
 		return (<div className="content">
+		<Filter/>
 		<div className="products-list">
 			{this.renderProductsList()}
 		</div>

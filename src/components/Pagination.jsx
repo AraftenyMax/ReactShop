@@ -22,7 +22,7 @@ class PaginationConnected extends React.Component {
 
 	renderPagination() {
 		return (<div className="paging-items">
-			{this.props.pagesCount.map((page) => <PagingButton page={page + 1}/>)}
+			{this.props.pagesCount.map((page) => <PagingButton page={page + 1} key={page}/>)}
 			</div>);
 	}
 

@@ -1,11 +1,25 @@
 import Products from '../Products.js';
+import Filters from '../Filters.js';
 import {ADD_TO_BUSKET, DELETE_FROM_BUSKET,
-	REMOVE_FROM_BUSKET, CLEAR_BUSKET, MAKE_ORDER} from '../constants/ActionTypes.js';
+	REMOVE_FROM_BUSKET, CLEAR_BUSKET, MAKE_ORDER, 
+	APPLY_FILTER, CLEAR_FILTER} from '../constants/ActionTypes.js';
 
-export function fetchProducts(data = "") {
+export function fetchProducts(url = "") {
 	let products = {};
 	Products.map((product) => products[product.id] = product);
 	return products;
+}
+
+export function fetchFilters(url = "") {
+	return Filters;
+}
+
+export function applyFilter(filter) {
+	return {type: APPLY_FILTER, payload: {filter: filter}};
+}
+
+export function clearFilter(filter) {
+	return {type: CLEAR_FILTER, payload: {filter: filter}};
 }
 
 export function addToBusket(itemId, count = 1) {
