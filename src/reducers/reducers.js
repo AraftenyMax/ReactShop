@@ -151,13 +151,16 @@ export function selectPagination(state, page) {
 	let rightLimit = page + pagingLimit;
 	if (leftLimit < 0)
 		leftLimit = 0;
-	let productPages;
-	if (!state.filter.userFilter) 
-		productPages = Object.keys(state.products).length / productsPerPage;
-	else
-		productPages = Object.keys(state.filteredProducts).length / productsPerPage;
-	if (rightLimit > productPages)
-		rightLimit = productPages;
+	let pagesCount;
+	if (state.filters.filters.userFilter != undefined && 
+		Object.keys(state.filters.filters.userFilter).length != 0) {
+		pagesCount = Object.keys(state.products.filteredProducts).length / productsPerPage;
+	}else{
+		pagesCount = Object.keys(state.products.products).length / productsPerPage;
+	}
+	if (rightLimit > pagesCount)
+		rightLimit = pagesCount;
+	console.log(leftLimit, rightLimit, page, pagesCount, pagingLimit);
 	let pages = range(leftLimit, rightLimit, 1);
 	return pages;
 }

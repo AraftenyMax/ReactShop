@@ -111,7 +111,7 @@ let Products = [
 		 high-quality sound. Just like magic.",
 		image: "https://images-na.ssl-images-amazon.com/images/I/41DYtv1JJaL._SX466_.jpg",
 		price: "199",
-		os: "Android",
+		os: "No info",
 		count: 4
 	},
 	{

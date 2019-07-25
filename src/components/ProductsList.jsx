@@ -38,6 +38,7 @@ class ProductsListConnected extends React.Component {
 		<div className="products-list">
 			{this.renderProductsList()}
 		</div>
+		<Pagination page={this.page}/>
 		</div>);
 	}
 }
