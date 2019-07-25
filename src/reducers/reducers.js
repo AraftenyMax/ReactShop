@@ -4,11 +4,10 @@ import {ADD_TO_BUSKET, DELETE_FROM_BUSKET, REMOVE_FROM_BUSKET,
 import {fetchProducts, fetchFilters} from './actions.js';
 import {combineReducers, createStore} from 'redux';
 
-const osFilter = (requiredOs, product) => requiredOs.includes(product.os);
-const sellerNameFilter = (requiredSellers, product) => requiredSellers.includes(product.sellerName);
-const priceFilter = (priceGap, product) => {
+const osFilter = (product, requiredOs) => requiredOs.includes(product.os);
+const sellerNameFilter = (product, requiredSellers) => requiredSellers.includes(product.sellerName);
+const priceFilter = (product, priceGap) => {
 	let price = priceGap[0].split("-").map((price) => parseInt(price));
-	console.log(price, product.price);
 	return product.price > price[0] && product.price < price[1];
 }
 
@@ -45,18 +44,19 @@ const products = (state = initialState, action) => {
 		newState.filters.userFilter = Object.assign({}, action.payload.filter);
 		Object.keys(newState.products).map((productId) => {
 			let product = newState.products[productId];
-			Object.keys(newState.filters.userFilter).map((filterName) => {
-				let filterRequiredValues = newState.filters.userFilter[filterName];
-				let filterHandler = newState.filters.filterHandlers[filterName];
-				console.log(product, filterRequiredValues, filterHandler(filterRequiredValues, product));
-				if (filterHandler(filterRequiredValues, product)) {
-					newState.filteredProducts[productId] = product;
-				}
+			let matches = Object.keys(newState.filters.userFilter).map((filterName) => {
+				let values = newState.filters.userFilter[filterName];
+				let filter = newState.filters.filterHandlers[filterName];
+				return filter(product, values);
 			});
+			if (matches.every(m => m == true)) {
+				newState.filteredProducts[productId] = product;
+			}
 		});
 		return newState;
 	case CLEAR_FILTER:
 		newState = Object.assign({}, state);
+		newState.filters.userFilter = {};
 		newState.filteredProducts = {};
 		return newState;
 	default:
@@ -70,7 +70,7 @@ const filters = (state = initialState, action) => {
 		case CLEAR_FILTER:
 			newState = Object.assign({}, state);
 			newState.userFilter = {};
-			newState.orderedProducts = {};
+			newState.filteredProducts = {};
 			return newState;
 		default:
 			return state;
