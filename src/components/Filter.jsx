@@ -10,7 +10,6 @@ function mapStateToProps(state, props) {
 class FilterConnected extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
 		this.filters = props.filters;
 		this.categoryAttribute = 'category';
 		this.dataAttribute = 'data';

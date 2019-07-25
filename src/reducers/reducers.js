@@ -4,10 +4,13 @@ import {ADD_TO_BUSKET, DELETE_FROM_BUSKET, REMOVE_FROM_BUSKET,
 import {fetchProducts, fetchFilters} from './actions.js';
 import {combineReducers, createStore} from 'redux';
 
-const osFilter = ({requiredOs, product}) => product.os in requiredOs;
-const sellerNameFilter = ({requiredSellers, product}) => product.sellerName in requiredSellers;
-const priceFilter = ({requiredPrice, product}) => 
-	product.price > requiredPrice[0] && product.price < requiredPrice[1];
+const osFilter = (requiredOs, product) => requiredOs.includes(product.os);
+const sellerNameFilter = (requiredSellers, product) => requiredSellers.includes(product.sellerName);
+const priceFilter = (priceGap, product) => {
+	let price = priceGap[0].split("-").map((price) => parseInt(price));
+	console.log(price, product.price);
+	return product.price > price[0] && product.price < price[1];
+}
 
 const initialState = {
 	orderedProducts: {},
@@ -39,13 +42,13 @@ const products = (state = initialState, action) => {
 		return state.find((product) => product.id === action.id);
 	case APPLY_FILTER:
 		newState = Object.assign({}, state);
+		newState.filters.userFilter = Object.assign({}, action.payload.filter);
 		Object.keys(newState.products).map((productId) => {
 			let product = newState.products[productId];
-			console.log(product);
-			console.log(newState.filters);
 			Object.keys(newState.filters.userFilter).map((filterName) => {
 				let filterRequiredValues = newState.filters.userFilter[filterName];
 				let filterHandler = newState.filters.filterHandlers[filterName];
+				console.log(product, filterRequiredValues, filterHandler(filterRequiredValues, product));
 				if (filterHandler(filterRequiredValues, product)) {
 					newState.filteredProducts[productId] = product;
 				}
@@ -64,13 +67,10 @@ const products = (state = initialState, action) => {
 const filters = (state = initialState, action) => {
 	let newState;
 	switch(action.type) {
-		case APPLY_FILTER:
-			newState = Object.assign({}, state);
-			newState.userFilter = Object.assign({}, action.payload.filter);
-			return newState;
 		case CLEAR_FILTER:
 			newState = Object.assign({}, state);
 			newState.userFilter = {};
+			newState.orderedProducts = {};
 			return newState;
 		default:
 			return state;
@@ -135,8 +135,9 @@ export function selectProductsForPage(state, page) {
 	let offset = (page - 1) * productsPerPage;
 	let limit = offset + productsPerPage;
 	let container = Object.assign({}, state.products.products);
-	if (state.filters.userFilter != undefined && 
-		Object.keys(state.filters.userFilter).length != 0) {
+	console.log(state.filters);
+	if (state.filters.filters.userFilter != undefined && 
+		Object.keys(state.filters.filters.userFilter).length != 0) {
 		container = Object.assign(state.products.filteredProducts);
 	}
 	if (limit > Object.keys(container).length == true)
