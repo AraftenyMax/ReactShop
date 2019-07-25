@@ -4,7 +4,7 @@ import BusketCountControls from './BusketCountControls.jsx';
 
 function mapStateToProps(state, ownProps) {
 	let id = ownProps.match.params.id;
-	let product = state.products[id];
+	let product = state.products.products[id];
 	let item = state.busket.orderedProducts[id];
 	let orderedCount = item ? item.count : 0;
 	return {product: product, orderedCount: orderedCount};

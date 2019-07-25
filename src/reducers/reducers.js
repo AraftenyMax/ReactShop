@@ -4,12 +4,23 @@ import {ADD_TO_BUSKET, DELETE_FROM_BUSKET, REMOVE_FROM_BUSKET,
 import {fetchProducts, fetchFilters} from './actions.js';
 import {combineReducers, createStore} from 'redux';
 
+const osFilter = ({requiredOs, product}) => product.os in requiredOs;
+const sellerNameFilter = ({requiredSellers, product}) => product.sellerName in requiredSellers;
+const priceFilter = ({requiredPrice, product}) => 
+	product.price > requiredPrice[0] && product.price < requiredPrice[1];
+
 const initialState = {
 	orderedProducts: {},
 	products: {},
+	filteredProducts: {},
 	filters: {
 		userFilter: {},
-		defaultFilters: {}
+		filterTokens: {},
+		filterHandlers: {
+			"os": osFilter,
+			"sellerName": sellerNameFilter,
+			"price": priceFilter
+		}
 	}
 }
 
@@ -19,25 +30,46 @@ const range = (start, stop, step) =>
 	Array.from({ length: (stop - start) / step + 1}, (_, i) => start + (i * step));
 
 initialState.products = fetchProducts();
-initialState.filters.defaultFilters = fetchFilters();
+initialState.filters.filterTokens = fetchFilters();
 
-const products = (state = initialState.products, action) => {
+const products = (state = initialState, action) => {
+	let newState;
 	switch(action.type) {
 	case GET_PRODUCT_BY_ID:
 		return state.find((product) => product.id === action.id);
+	case APPLY_FILTER:
+		newState = Object.assign({}, state);
+		Object.keys(newState.products).map((productId) => {
+			let product = newState.products[productId];
+			console.log(product);
+			console.log(newState.filters);
+			Object.keys(newState.filters.userFilter).map((filterName) => {
+				let filterRequiredValues = newState.filters.userFilter[filterName];
+				let filterHandler = newState.filters.filterHandlers[filterName];
+				if (filterHandler(filterRequiredValues, product)) {
+					newState.filteredProducts[productId] = product;
+				}
+			});
+		});
+		return newState;
+	case CLEAR_FILTER:
+		newState = Object.assign({}, state);
+		newState.filteredProducts = {};
+		return newState;
 	default:
 		return state;
 	}
 }
 
-const filters = (state = initialState.filters, action) => {
-	let newState = {...state};
+const filters = (state = initialState, action) => {
+	let newState;
 	switch(action.type) {
 		case APPLY_FILTER:
+			newState = Object.assign({}, state);
 			newState.userFilter = Object.assign({}, action.payload.filter);
-			console.log(action.payload);
 			return newState;
 		case CLEAR_FILTER:
+			newState = Object.assign({}, state);
 			newState.userFilter = {};
 			return newState;
 		default:
@@ -102,9 +134,14 @@ const busket = (state = initialState, action) => {
 export function selectProductsForPage(state, page) {
 	let offset = (page - 1) * productsPerPage;
 	let limit = offset + productsPerPage;
-	if (limit > Object.keys(state.products).length == true)
-		limit = Object.keys(state.products).length;
-	return Object.values(state.products).slice(offset, limit);
+	let container = Object.assign({}, state.products.products);
+	if (state.filters.userFilter != undefined && 
+		Object.keys(state.filters.userFilter).length != 0) {
+		container = Object.assign(state.products.filteredProducts);
+	}
+	if (limit > Object.keys(container).length == true)
+		limit = Object.keys(container).length;
+	return Object.values(container).slice(offset, limit);
 }
 
 export function selectPagination(state, page) {
@@ -113,7 +150,11 @@ export function selectPagination(state, page) {
 	let rightLimit = page + pagingLimit;
 	if (leftLimit < 0)
 		leftLimit = 0;
-	let productPages = Object.keys(state.products).length / productsPerPage;
+	let productPages;
+	if (!state.filter.userFilter) 
+		productPages = Object.keys(state.products).length / productsPerPage;
+	else
+		productPages = Object.keys(state.filteredProducts).length / productsPerPage;
 	if (rightLimit > productPages)
 		rightLimit = productPages;
 	let pages = range(leftLimit, rightLimit, 1);
@@ -122,7 +163,7 @@ export function selectPagination(state, page) {
 
 export function selectProductPrice(state, id) {
 	let orderedProduct = state.busket.orderedProducts[id];
-	let item = state.products[id];
+	let item = state.products.products[id];
 	return orderedProduct.count * item.price;
 }
 
@@ -160,8 +201,7 @@ export function selectOrderedProductsIds(state) {
 }
 
 export function selectFilters(state) {
-	console.log(state);
-	return state.filters.defaultFilters;
+	return state.filters.filters.filterTokens;
 }
 
 export function selectUserFilters(state) {
@@ -178,9 +218,9 @@ export function selectBusketInfo(state) {
 }
 
 const shop = combineReducers({
-	busket: busket,
+	filters: filters,
 	products: products,
-	filters: filters
+	busket: busket
 });
 
 export default shop;

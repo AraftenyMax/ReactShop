@@ -19,13 +19,13 @@ class BusketCountControlsConnected extends React.Component {
 	}
 
 	addToBusket(event) {
-		let payload = addToBusket(this.productId);
+		let payload = addToBusket(this.productId, 1);
 		this.dispatch(payload);
 	}
 
 	deleteFromBusket(event) {
 		if (this.props.orderedCount > 0) {
-			let payload = deleteFromBusket(this.productId);
+			let payload = deleteFromBusket(this.productId, 1);
 			this.dispatch(payload);
 		}
 	}
