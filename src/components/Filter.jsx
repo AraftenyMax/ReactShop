@@ -54,6 +54,7 @@ class FilterConnected extends React.Component {
 	}
 
 	applyFilter() {
+		this.clearFilter();
 		let payload = applyFilter(this.state.userFilter);
 		this.props.dispatch(payload);
 	}

@@ -26,10 +26,12 @@ class BusketConnected extends React.Component {
 	}
 
 	renderContent() {
+		console.log(this.props.products);
 		if (this.props.products) {
 			return (<div className="busket-products">
-			{this.props.products.map((product, number) => <div key={product.id}>
-				<BusketProductPreview number={number} product={product}/></div>)}
+			{Object.keys(this.props.products).map((productSeller) => 
+				this.props.products[productSeller].map((product, number) => <div key={product.id}>
+				<BusketProductPreview number={number} product={product}/></div>))}
 			<div className="busket-total-price">Total price: {this.props.totalPrice}$</div>
 			</div>);
 		}

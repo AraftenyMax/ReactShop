@@ -44,12 +44,12 @@ const products = (state = initialState, action) => {
 		newState.filters.userFilter = Object.assign({}, action.payload.filter);
 		Object.keys(newState.products).map((productId) => {
 			let product = newState.products[productId];
-			let matches = Object.keys(newState.filters.userFilter).map((filterName) => {
+			let matches = Object.keys(newState.filters.userFilter).every((filterName) => {
 				let values = newState.filters.userFilter[filterName];
 				let filter = newState.filters.filterHandlers[filterName];
 				return filter(product, values);
 			});
-			if (matches.every(m => m == true)) {
+			if (matches) {
 				newState.filteredProducts[productId] = product;
 			}
 		});
@@ -135,13 +135,13 @@ export function selectProductsForPage(state, page) {
 	let offset = (page - 1) * productsPerPage;
 	let limit = offset + productsPerPage;
 	let container = Object.assign({}, state.products.products);
-	console.log(state.filters);
-	if (state.filters.filters.userFilter != undefined && 
-		Object.keys(state.filters.filters.userFilter).length != 0) {
-		container = Object.assign(state.products.filteredProducts);
+	if (state.products.filteredProducts != undefined && 
+		Object.keys(state.products.filteredProducts).length != 0) {
+		container = Object.assign({}, state.products.filteredProducts);
 	}
-	if (limit > Object.keys(container).length == true)
+	if (limit > Object.keys(container).length == true) {
 		limit = Object.keys(container).length;
+	}
 	return Object.values(container).slice(offset, limit);
 }
 
@@ -149,18 +149,20 @@ export function selectPagination(state, page) {
 	let offset = page;
 	let leftLimit = page - pagingLimit;
 	let rightLimit = page + pagingLimit;
-	if (leftLimit < 0)
+	if (leftLimit < 0){
 		leftLimit = 0;
-	let pagesCount;
-	if (state.filters.filters.userFilter != undefined && 
-		Object.keys(state.filters.filters.userFilter).length != 0) {
-		pagesCount = Object.keys(state.products.filteredProducts).length / productsPerPage;
-	}else{
-		pagesCount = Object.keys(state.products.products).length / productsPerPage;
 	}
-	if (rightLimit > pagesCount)
+	let container;
+	if (state.products.filteredProducts != undefined && 
+		Object.keys(state.products.filteredProducts).length != 0) {
+		container = state.products.filteredProducts;
+	} else {
+		container = state.products.products;
+	}
+	let pagesCount = Object.keys(container).length / productsPerPage;
+	if (rightLimit > pagesCount) {
 		rightLimit = pagesCount;
-	console.log(leftLimit, rightLimit, page, pagesCount, pagingLimit);
+	}
 	let pages = range(leftLimit, rightLimit, 1);
 	return pages;
 }
@@ -194,8 +196,13 @@ export function selectProductsCount(state) {
 
 export function selectOrderedProducts(state) {
 	let orderedProductsIds = selectOrderedProductsIds(state);
-	let orderedProducts = Object.keys(orderedProductsIds).map((orderedProductId) => {
-		return state.products[orderedProductId];
+	let orderedProducts = {};
+	Object.keys(orderedProductsIds).map((orderedProductId) => {
+		let product = state.busket.orderedProducts[orderedProductId];
+		if (!orderedProducts[product.sellerName]) {
+			orderedProducts[product.sellerName] = [];
+		}
+		orderedProducts[product.sellerName].push(product);
 	});
 	return orderedProducts;
 }

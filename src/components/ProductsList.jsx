@@ -28,7 +28,7 @@ class ProductsListConnected extends React.Component {
 					 product={product} />);
 			return data;
 		} else {
-			return (<p>Wrong page number</p>);
+			return (<p>There's no goods that match filter.</p>);
 		}
 	}
 

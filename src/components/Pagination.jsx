@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {selectPagination} from '../reducers/reducers.js';
 
 function mapStateToProps(state, props) {
-	return {pagesCount: selectPagination(state, props.page)};
+	return {pages: selectPagination(state, props.page)};
 }
 
 const PagingButton = ({page}) => {
@@ -22,7 +22,8 @@ class PaginationConnected extends React.Component {
 
 	renderPagination() {
 		return (<div className="paging-items">
-			{this.props.pagesCount.map((page) => <PagingButton page={page + 1} key={page}/>)}
+			{this.props.pages.map((page) => <PagingButton page={page + 1} key={page} 
+				className={page == this.currentPage ? 'current-page' : 'pagination-item'}/>)}
 			</div>);
 	}
 
